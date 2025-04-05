@@ -1,0 +1,78 @@
+---
+interface Props {
+    id: string;
+    title: string;
+    description: string;
+    ingredients: string[];
+    instructions: string[];
+    image: string;
+}
+
+const { id, title, description, ingredients, instructions, image } = Astro.props;
+---
+
+<div id={id} class="fixed inset-0 z-50 hidden">
+    <!-- Overlay -->
+    <div 
+        class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onclick={`closeModal('${id}')`}
+    ></div>
+    
+    <!-- Modal -->
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white/10 backdrop-blur-md rounded-lg shadow-xl border border-white/20 overflow-hidden">
+        <!-- Header -->
+        <div class="p-6 border-b border-white/20">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-white">{title}</h2>
+                <button 
+                    onclick={`closeModal('${id}')`}
+                    class="text-white/60 hover:text-white"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="p-6">
+            <img src={image} alt={title} class="w-full h-64 object-cover rounded-lg mb-6" />
+            <p class="text-white/90 mb-6">{description}</p>
+            
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Ingredientes</h3>
+                    <ul class="list-disc list-inside text-white/80 space-y-2">
+                        {ingredients.map(ingredient => (
+                            <li>{ingredient}</li>
+                        ))}
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Instrucciones</h3>
+                    <ol class="list-decimal list-inside text-white/80 space-y-2">
+                        {instructions.map(instruction => (
+                            <li>{instruction}</li>
+                        ))}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add event listener for Escape key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            const modals = document.querySelectorAll('.fixed.inset-0.z-50');
+            modals.forEach(modal => {
+                if (!modal.classList.contains('hidden')) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script> 

@@ -1,11 +1,271 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import RecipeModal from '../components/RecipeModal.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+const recipes = {
+	juane: {
+		title: "Juane",
+		description: "El plato emblemático de San Juan, preparado con arroz, gallina y hierbas amazónicas.",
+		ingredients: [
+			"2 tazas de arroz",
+			"1 gallina o pollo",
+			"Hojas de bijao",
+			"Huevos",
+			"Aceitunas",
+			"Hierbas amazónicas (sacha culantro, huacatay)",
+			"Ajo, cebolla y ají",
+			"Sal y pimienta al gusto"
+		],
+		instructions: [
+			"Cocinar el arroz hasta que esté al dente",
+			"Cocinar la gallina con las hierbas y especias",
+			"Mezclar el arroz con la gallina desmenuzada",
+			"Formar bolitas con la mezcla",
+			"Envolver en hojas de bijao",
+			"Cocinar al vapor por 30 minutos"
+		],
+		image: "/images/juane.png"
+	},
+	tacacho: {
+		title: "Tacacho",
+		description: "Plátano asado machacado con cecina, un desayuno típico de la selva.",
+		ingredients: [
+			"4 plátanos verdes",
+			"Cecina",
+			"Manteca de cerdo",
+			"Sal al gusto"
+		],
+		instructions: [
+			"Asar los plátanos hasta que estén dorados",
+			"Machacar los plátanos con la manteca",
+			"Freír la cecina hasta que esté crujiente",
+			"Servir el tacacho con la cecina"
+		],
+		image: "/images/tacacho.png"
+	},
+	patarashca: {
+		title: "Patarashca",
+		description: "Pescado envuelto en hojas de bijao con hierbas y especias amazónicas.",
+		ingredients: [
+			"Pescado fresco (paiche o dorado)",
+			"Hojas de bijao",
+			"Cebolla",
+			"Ajo",
+			"Ají charapita",
+			"Hierbas amazónicas",
+			"Sal y pimienta"
+		],
+		instructions: [
+			"Limpiar y sazonar el pescado",
+			"Picar finamente la cebolla, ajo y ají",
+			"Envolver el pescado con las hojas de bijao",
+			"Cocinar a la parrilla o al carbón",
+			"Servir caliente con yuca"
+		],
+		image: "/images/patarashca.png"
+	}
+};
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Cuánto falta para San Juan">
+	<main class="min-h-screen relative">
+		<!-- Background image with overlay -->
+		<div class="absolute inset-0 z-0">
+			<img 
+				src="/images/amazonia1.png" 
+				alt="Fiesta de San Juan" 
+				class="w-full h-full object-cover"
+			/>
+			<div class="absolute inset-0 bg-gradient-to-b from-green-900/50 to-green-700/50"></div>
+		</div>
+
+		<!-- Content -->
+		<div class="relative z-10 container mx-auto px-4 py-16">
+			<h1 class="text-4xl md:text-6xl font-bold text-center mb-4 text-white">
+				Cuánto falta para San Juan
+			</h1>
+			<h2 class="text-2xl md:text-3xl text-center mb-8 text-white/90">
+				La fiesta más grande de la Amazonía peruana
+			</h2>
+			
+			<div class="max-w-2xl mx-auto bg-white/10 rounded-lg p-8 shadow-xl backdrop-blur-sm border border-white/20">
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+					<div class="text-center">
+						<div id="days" class="text-4xl md:text-6xl font-bold text-white">00</div>
+						<div class="text-sm md:text-base text-white/80">Días</div>
+					</div>
+					<div class="text-center">
+						<div id="hours" class="text-4xl md:text-6xl font-bold text-white">00</div>
+						<div class="text-sm md:text-base text-white/80">Horas</div>
+					</div>
+					<div class="text-center">
+						<div id="minutes" class="text-4xl md:text-6xl font-bold text-white">00</div>
+						<div class="text-sm md:text-base text-white/80">Minutos</div>
+					</div>
+					<div class="text-center">
+						<div id="seconds" class="text-4xl md:text-6xl font-bold text-white">00</div>
+						<div class="text-sm md:text-base text-white/80">Segundos</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mt-12 text-center space-y-4">
+				<p class="text-lg md:text-xl text-white/90">
+					El tiempo vuela como las aves de la Amazonía
+				</p>
+				<div class="max-w-2xl mx-auto text-white/80 text-sm md:text-base">
+					<p class="mb-2">La fiesta de San Juan es una celebración que une tradición, fe y cultura amazónica.</p>
+					<p>Un día para compartir juane, bailar pandilla y celebrar la riqueza de nuestra tierra.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Recipes Section -->
+		<div class="relative z-10 bg-white/5 backdrop-blur-sm py-16 mt-16">
+			<div class="container mx-auto px-4">
+				<h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
+					Mientras esperas, aprende a cocinar estos deliciosos platillos
+				</h2>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					<!-- Juane -->
+					<div class="bg-white/10 rounded-lg overflow-hidden shadow-lg backdrop-blur-sm border border-white/20">
+						<img 
+							src="/images/juane.png" 
+							alt="Juane" 
+							class="w-full h-48 object-cover"
+						/>
+						<div class="p-6">
+							<h3 class="text-xl font-bold text-white mb-2">Juane</h3>
+							<p class="text-white/80 text-sm mb-4">El plato emblemático de San Juan, preparado con arroz, gallina y hierbas amazónicas.</p>
+							<button 
+								onclick="showRecipe('juane-modal')"
+								class="text-yellow-300 hover:text-yellow-200 text-sm font-medium"
+							>
+								Ver receta →
+							</button>
+						</div>
+					</div>
+
+					<!-- Tacacho -->
+					<div class="bg-white/10 rounded-lg overflow-hidden shadow-lg backdrop-blur-sm border border-white/20">
+						<img 
+							src="/images/tacacho.png" 
+							alt="Tacacho" 
+							class="w-full h-48 object-cover"
+						/>
+						<div class="p-6">
+							<h3 class="text-xl font-bold text-white mb-2">Tacacho</h3>
+							<p class="text-white/80 text-sm mb-4">Plátano asado machacado con cecina, un desayuno típico de la selva.</p>
+							<button 
+								onclick="showRecipe('tacacho-modal')"
+								class="text-yellow-300 hover:text-yellow-200 text-sm font-medium"
+							>
+								Ver receta →
+							</button>
+						</div>
+					</div>
+
+					<!-- Patarashca -->
+					<div class="bg-white/10 rounded-lg overflow-hidden shadow-lg backdrop-blur-sm border border-white/20">
+						<img 
+							src="/images/patarashca.png" 
+							alt="Patarashca" 
+							class="w-full h-48 object-cover"
+						/>
+						<div class="p-6">
+							<h3 class="text-xl font-bold text-white mb-2">Patarashca</h3>
+							<p class="text-white/80 text-sm mb-4">Pescado envuelto en hojas de bijao con hierbas y especias amazónicas.</p>
+							<button 
+								onclick="showRecipe('patarashca-modal')"
+								class="text-yellow-300 hover:text-yellow-200 text-sm font-medium"
+							>
+								Ver receta →
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Recipe Modals -->
+		<RecipeModal 
+			id="juane-modal"
+			title={recipes.juane.title}
+			description={recipes.juane.description}
+			ingredients={recipes.juane.ingredients}
+			instructions={recipes.juane.instructions}
+			image={recipes.juane.image}
+		/>
+		<RecipeModal 
+			id="tacacho-modal"
+			title={recipes.tacacho.title}
+			description={recipes.tacacho.description}
+			ingredients={recipes.tacacho.ingredients}
+			instructions={recipes.tacacho.instructions}
+			image={recipes.tacacho.image}
+		/>
+		<RecipeModal 
+			id="patarashca-modal"
+			title={recipes.patarashca.title}
+			description={recipes.patarashca.description}
+			ingredients={recipes.patarashca.ingredients}
+			instructions={recipes.patarashca.instructions}
+			image={recipes.patarashca.image}
+		/>
+
+		<!-- Attribution -->
+		<div class="absolute bottom-4 right-4 text-xs text-white/60">
+			Foto por <a href="https://unsplash.com/@joaosilas" target="_blank" rel="noopener noreferrer" class="underline">João Silas</a> en <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="underline">Unsplash</a>
+		</div>
+	</main>
+
+	<script>
+		// Make showRecipe and closeModal globally available
+		window.showRecipe = function(modalId) {
+			document.getElementById(modalId).classList.remove('hidden');
+		}
+
+		window.closeModal = function(modalId) {
+			document.getElementById(modalId).classList.add('hidden');
+		}
+
+		function getNextJune24() {
+			const now = new Date();
+			const currentYear = now.getFullYear();
+			
+			// Crear fecha para el 24 de junio del año actual
+			const june24ThisYear = new Date(currentYear, 5, 24); // 5 es junio (0-11)
+			
+			// Si ya pasó el 24 de junio de este año, usar el próximo año
+			const targetDate = now > june24ThisYear 
+				? new Date(currentYear + 1, 5, 24)
+				: june24ThisYear;
+			
+			return targetDate;
+		}
+
+		function updateCountdown() {
+			const targetDate = getNextJune24();
+			const now = new Date();
+			const difference = targetDate - now;
+
+			const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+			const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+			const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+			document.getElementById('days').textContent = String(days).padStart(2, '0');
+			document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+			document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+			document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+		}
+
+		// Update immediately and then every second
+		updateCountdown();
+		setInterval(updateCountdown, 1000);
+	</script>
 </Layout>
